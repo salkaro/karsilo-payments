@@ -1,17 +1,14 @@
 {
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ],
-  "crons": [
-    {
-      "path": "/sync-subscriptions",
-      "schedule": "0 0 * * *"
-    }
-  ]
+    "builds": [
+        {
+            "src": "app.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "app.py"
+        }
+    ]
 }
