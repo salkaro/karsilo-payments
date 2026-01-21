@@ -56,10 +56,14 @@ def get_db():
 # Initialize Limiter
 limiter = Limiter(key_func=get_remote_address)
 
+TITLE = "Karsilo Payment API"
+DESCRIPTION = "API for handling Stripe events"
+VERSION = "1.0.1"
+
 app = FastAPI(
-    title="Karsilo Payment API",
-    description="API for handling Stripe events",
-    version="1.0.1",
+    title=TITLE,
+    description=DESCRIPTION,
+    version=VERSION,
     lifespan=lifespan,
 )
 
@@ -94,7 +98,11 @@ app.add_middleware(
 @app.get("/")
 @limiter.limit("5/second")
 async def root(request: Request):
-    return {"name": "IoT Salkaro Payments API", "version": "1.0.0", "status": "active"}
+    return {
+        "name": TITLE,
+        "version": VERSION,
+        "status": "active",
+    }
 
 
 @app.post("/sync-subscriptions")
@@ -275,5 +283,5 @@ async def subscription_update(request: Request):
     return JSONResponse(content={"message": "Subscription Updated"}, status_code=200)
 
 
-#if __name__ == "__main__":
-   #uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+# if __name__ == "__main__":
+# uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
