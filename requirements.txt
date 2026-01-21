@@ -1,0 +1,9 @@
+fastapi==0.115.12
+jsonify==0.5
+python-dotenv==1.0.1
+slowapi==0.1.9
+stripe==11.6.0
+Requests==2.32.3
+uvicorn==0.34.0
+google==3.0.0
+google-cloud-firestore==2.19.0
