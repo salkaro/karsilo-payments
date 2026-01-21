@@ -200,7 +200,10 @@ async def setup_endpoint(request: Request, secret: str):
 @limiter.limit("10/second")
 async def checkout_complete(request: Request):
     try:
-        event, db = await setup_endpoint(request, "CHECKOUT_COMPLETE_SECRET")
+        result = await setup_endpoint(request, "CHECKOUT_COMPLETE_SECRET")
+        if isinstance(result, JSONResponse):
+            return result
+        event, db = result
 
         if event["type"] == "checkout.session.completed":
             session_data = event["data"]["object"]
@@ -243,7 +246,10 @@ async def checkout_complete(request: Request):
 @limiter.limit("10/second")
 async def subscription_update(request: Request):
     try:
-        event, db = await setup_endpoint(request, "SUBSCRIPTION_UPDATE_SECRET")
+        result = await setup_endpoint(request, "SUBSCRIPTION_UPDATE_SECRET")
+        if isinstance(result, JSONResponse):
+            return result
+        event, db = result
         subscription = event["data"]["object"]
         stripe_customer_id = subscription["customer"]
         plan = subscription["plan"]
